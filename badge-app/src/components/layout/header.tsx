@@ -4,7 +4,7 @@ import { Stack, IStackStyles, IStackItemStyles } from 'office-ui-fabric-react';
 
 function Header() {
     return (
-        <header style={headerStyle}>
+        <header className="App-header">
             <div className="ms-Grid" dir="ltr">
                 <div className="ms-Grid-row">
                     <div className="ms-Grid-col ms-sm6 ms-md4 ms-lg2">
@@ -12,27 +12,17 @@ function Header() {
                     </div>
                     <div className="ms-Grid-col ms-sm6 ms-md8 ms-lg10">
                         <Stack horizontal gap={10} horizontalAlign="end" styles={itemAlginmentsStackStyles}>
-                            <Stack.Item align="center" styles={stackItemStyles}><Link to="/" style={linkStyle}>Badges</Link></Stack.Item>
-                            <Stack.Item align="center" styles={stackItemStyles}><Link to="/Account" style={linkStyle}>Account</Link></Stack.Item>
-                            <Stack.Item align="center" styles={stackItemStyles}><Link to="/Leaderboard" style={linkStyle}>Leaderboard</Link></Stack.Item>
-                            <Stack.Item align="center" styles={stackItemStyles}><Link to="/BadgeManager" style={linkStyle}>Badge Manager</Link></Stack.Item>
-                            <Stack.Item align="center" styles={stackItemStyles}><Link to="/LogOff" style={linkStyle}>Log Off</Link></Stack.Item>
+                            <Stack.Item align="center" styles={stackItemStyles}><Link to="/" className="header-link">Badges</Link></Stack.Item>
+                            <Stack.Item align="center" styles={stackItemStyles}><Link to="/Account" className="header-link">Account</Link></Stack.Item>
+                            <Stack.Item align="center" styles={stackItemStyles}><Link to="/Leaderboard" className="header-link">Leaderboard</Link></Stack.Item>
+                            <Stack.Item align="center" styles={stackItemStyles}><Link to="/BadgeManager" className="header-link">Badge Manager</Link></Stack.Item>
+                            <Stack.Item align="center" styles={stackItemStyles}><Link to="/LogOff" className="header-link">Log Off</Link></Stack.Item>
                         </Stack>
                     </div>
                 </div>
             </div>
         </header>
     )
-}
-
-const headerStyle = {
-    background: '#333',
-    color: '#fff'
-}
-
-const linkStyle = {
-    color: '#fff',
-    textDecoration: 'none'
 }
 
 const itemAlginmentsStackStyles: IStackStyles = {

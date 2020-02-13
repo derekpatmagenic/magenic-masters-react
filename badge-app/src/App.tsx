@@ -6,9 +6,9 @@ import Account from './components/pages/Account';
 import Badges from './components/pages/Badges';
 import Leaderboard from './components/pages/Leaderboard';
 import BadgeManager from './components/pages/BadgeManager';
+import Footer from './components/layout/footer';
 
 class App extends Component {
-
   render() {
     return (
       <Router>
@@ -20,6 +20,7 @@ class App extends Component {
             <Route path="/account" component={Account} />
             <Route path="/leaderboard" component={Leaderboard} />
             <Route path="/badgemanager" component={BadgeManager} />
+            <Footer />
           </div>
         </div>
       </Router>
