@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <div className="container">
+          <div className="App-container">
             <Header />
             <Route exact path="/" component={Badges} />
             <Route path="/badges" component={Badges} />
