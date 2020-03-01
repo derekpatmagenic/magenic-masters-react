@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
   position: relative;
   min-height: 95vh;
   padding-bottom: 36px;
@@ -19,6 +18,8 @@
 .App-header {
   background-color: #333;
   color: #fff;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .App-header .header-link {
