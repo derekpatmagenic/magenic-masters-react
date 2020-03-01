@@ -2,7 +2,6 @@ import React from 'react';
 import CorporateBadges from '../layout/CorporateBadges';
 import CommunityBadges from '../layout/CommunityBadges';
 import ActivitySubmit from '../layout/ActivitySubmit';
-import useBadgeList from '../../hooks/UseBadgeList';
 
 function Badges() {
     return (

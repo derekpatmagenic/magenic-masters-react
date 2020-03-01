@@ -15,11 +15,13 @@ class App extends Component {
         <div className="App">
           <div className="App-container">
             <Header />
-            <Route exact path="/" component={Badges} />
-            <Route path="/badges" component={Badges} />
-            <Route path="/account" component={Account} />
-            <Route path="/leaderboard" component={Leaderboard} />
-            <Route path="/badgemanager" component={BadgeManager} />
+            <div className="App-body">
+              <Route exact path="/" component={Badges} />
+              <Route path="/badges" component={Badges} />
+              <Route path="/account" component={Account} />
+              <Route path="/leaderboard" component={Leaderboard} />
+              <Route path="/badgemanager" component={BadgeManager} />
+            </div>
             <Footer />
           </div>
         </div>

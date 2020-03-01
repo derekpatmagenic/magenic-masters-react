@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, IDropdownOption, IDropdownStyles, Stack, IStackTokens, DatePicker, TextField, IDatePickerStyles, ITextFieldStyles, PrimaryButton, IButtonStyles, Label } from 'office-ui-fabric-react';
+import { Dropdown, IDropdownOption, IDropdownStyles, Stack, IStackTokens, DatePicker, TextField, IDatePickerStyles, ITextFieldStyles, PrimaryButton, IButtonStyles, Label, IStackStyles } from 'office-ui-fabric-react';
 import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
 import { IBasePickerSuggestionsProps, NormalPeoplePicker, ValidationState, IBasePickerStyles } from 'office-ui-fabric-react/lib/Pickers';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
@@ -7,6 +7,9 @@ import { people, mru } from '@uifabric/example-data';
 
 function ActivitySubmit(props: any): JSX.Element {
     const stackTokens: IStackTokens = { childrenGap: 20 };
+    const stackStyles: Partial<IStackStyles> = {
+        root: { width: 500 }
+    }
     const dropDownStyles: Partial<IDropdownStyles> = {
         dropdown: { width: 300 }
     };
@@ -95,7 +98,7 @@ function ActivitySubmit(props: any): JSX.Element {
     initializeIcons();
 
     return (
-        <Stack tokens={stackTokens}>
+        <Stack tokens={stackTokens} styles={stackStyles}>
             <h1>Submit a Completed Activity</h1>
             <Dropdown
                 label="Activity Type"

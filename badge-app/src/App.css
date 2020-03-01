@@ -46,6 +46,11 @@
   bottom: 0px;
 }
 
+.App-body {
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
