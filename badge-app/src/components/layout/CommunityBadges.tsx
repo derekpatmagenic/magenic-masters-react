@@ -1,6 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
+import { ReduxState } from '../../store/Store';
 import { Stack, IStackStyles, IStackItemStyles, Image, IImageStyles } from 'office-ui-fabric-react';
 import useBadgeList from '../../hooks/UseBadgeList';
+import { loadAllBadges, addBadge } from '../../store/Badges';
 
 function CommunityBadges() {
     const stackStyles: Partial<IStackStyles> = {
@@ -18,8 +22,8 @@ function CommunityBadges() {
     const imageStyles: Partial<IImageStyles> = {
         root: { float: "left", margin: "10px" }
     };
-    const badges = useBadgeList();
-    const badgeElements = badges.map((badge) => 
+    const allBadges = loadAllBadges();
+    const badgeElements = allBadges.payload.allCorpBadges.map((badge) => 
         <Image key={badge.id} src={badge.path} title={badge.name} alt={badge.name} styles={imageStyles} />
     );
     return (
@@ -45,4 +49,16 @@ function CommunityBadges() {
     )
 }
 
-export default CommunityBadges;
+const mapStateToProps = (state: ReduxState) => ({
+    allCorpBadges: state.badges
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => 
+    bindActionCreators(
+        {
+            loadAllBadges, addBadge
+        },
+        dispatch
+    );
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommunityBadges);
