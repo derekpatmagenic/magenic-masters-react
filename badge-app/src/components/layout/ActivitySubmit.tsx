@@ -107,6 +107,7 @@ function ActivitySubmit(props: any): JSX.Element {
         const newBadgeId = allCorpBadges.allCorpBadges.length + 1;
         const badge: Badge = { id: newBadgeId, name: "Badge " + newBadgeId, path: "badgeimage.png" };
         addBadge(badge);
+        console.log(allCorpBadges);
     }
       
     initializeIcons();

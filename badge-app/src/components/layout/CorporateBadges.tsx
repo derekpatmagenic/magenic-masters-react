@@ -1,7 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux';
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { Image, IImageStyles, Stack, IStackStyles, IStackItemStyles } from 'office-ui-fabric-react'
 import useBadgeList from '../../hooks/UseBadgeList';
-import { loadAllBadges } from '../../store/Badges';
+import { loadAllBadges, addBadge } from '../../store/Badges';
+import { ReduxState } from '../../store/Store';
 
 function CorporateBadges() {
     const stackStyles: Partial<IStackStyles> = {
@@ -46,4 +49,16 @@ function CorporateBadges() {
     )
 }
 
-export default CorporateBadges;
+const mapStateToProps = (state: ReduxState) => ({
+    allCorpBadges: state.badges
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => 
+    bindActionCreators(
+        {
+            loadAllBadges, addBadge
+        },
+        dispatch
+    );
+
+export default connect(mapStateToProps, mapDispatchToProps)(CorporateBadges);
