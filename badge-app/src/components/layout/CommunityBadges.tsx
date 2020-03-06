@@ -20,7 +20,7 @@ function CommunityBadges() {
     };
     const badges = useBadgeList();
     const badgeElements = badges.map((badge) => 
-        <Image src={badge.path} title={badge.name} alt={badge.name} styles={imageStyles} />
+        <Image key={badge.id} src={badge.path} title={badge.name} alt={badge.name} styles={imageStyles} />
     );
     return (
         <Stack styles={stackStyles}>

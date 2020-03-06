@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './components/layout/header';
 import './App.css';
 import Account from './components/pages/Account';
-import Badges from './components/pages/Badges';
 import Leaderboard from './components/pages/Leaderboard';
 import BadgeManager from './components/pages/BadgeManager';
 import Footer from './components/layout/footer';
+import Badges from './components/pages/Badges';
 
 class App extends Component {
   render() {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, IImageStyles, Stack, IStackStyles, IStackItemStyles } from 'office-ui-fabric-react'
 import useBadgeList from '../../hooks/UseBadgeList';
+import { loadAllBadges } from '../../store/Badges';
 
 function CorporateBadges() {
     const stackStyles: Partial<IStackStyles> = {
@@ -18,9 +19,9 @@ function CorporateBadges() {
     const imageStyles: Partial<IImageStyles> = {
         root: { float: "left", margin: "10px" }
     };
-    const badges = useBadgeList();
-    const badgeElements = badges.map((badge) => 
-        <Image src={badge.path} title={badge.name} alt={badge.name} styles={imageStyles} />
+    const allBadges = loadAllBadges();
+    const badgeElements = allBadges.payload.allCorpBadges.map((badge) => 
+        <Image key={badge.id} src={badge.path} title={badge.name} alt={badge.name} styles={imageStyles} />
     );
     return (
         <Stack styles={stackStyles}>

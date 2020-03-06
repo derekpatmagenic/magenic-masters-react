@@ -1,11 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { Dropdown, IDropdownOption, IDropdownStyles, Stack, IStackTokens, DatePicker, TextField, IDatePickerStyles, ITextFieldStyles, PrimaryButton, IButtonStyles, Label, IStackStyles } from 'office-ui-fabric-react';
 import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
 import { IBasePickerSuggestionsProps, NormalPeoplePicker, ValidationState, IBasePickerStyles } from 'office-ui-fabric-react/lib/Pickers';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 import { people, mru } from '@uifabric/example-data';
+import { addBadge } from '../../store/Badges';
+import Badge from '../../models/Badge';
+import { ReduxState } from '../../store/Store';
+
+ActivitySubmit.propTypes = {
+    allCorpBadges: PropTypes.object,
+    addBadge: PropTypes.func
+}
 
 function ActivitySubmit(props: any): JSX.Element {
+    const {allCorpBadges, addBadge} = props;
     const stackTokens: IStackTokens = { childrenGap: 20 };
     const stackStyles: Partial<IStackStyles> = {
         root: { width: 500 }
@@ -91,8 +103,10 @@ function ActivitySubmit(props: any): JSX.Element {
         }
     };
 
-    const handleSubmit = (event: any) => {
-        console.log('submit');
+    const handleSubmit = () => {
+        const newBadgeId = allCorpBadges.allCorpBadges.length + 1;
+        const badge: Badge = { id: newBadgeId, name: "Badge " + newBadgeId, path: "badgeimage.png" };
+        addBadge(badge);
     }
       
     initializeIcons();
@@ -138,7 +152,7 @@ function ActivitySubmit(props: any): JSX.Element {
                 styles={basePickerStyles} />
             <PrimaryButton
                 text="Submit"
-                onClick={handleSubmit}
+                onClick={() => { handleSubmit(); }}
                 styles={buttonStyles} />
         </Stack>
     )
@@ -188,4 +202,16 @@ function onInputChange(input: string): string {
     return input;
 }
 
-export default ActivitySubmit;
+const mapStateToProps = (state: ReduxState) => ({
+    allCorpBadges: state.badges
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => 
+    bindActionCreators(
+        {
+            addBadge
+        },
+        dispatch
+    );
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActivitySubmit);
