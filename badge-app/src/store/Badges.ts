@@ -1,12 +1,15 @@
 import Badge from "../models/Badge";
 import ReduxAction, { ReduxActionType } from "./ReduxAction";
+import { BadgeType } from "../enums/BadgeType";
 
 export interface ReduxBadgesState {
-    allCorpBadges: Array<Badge>
+    allCorpBadges: Array<Badge>,
+    allCommBadges: Array<Badge>
 }
 
 const initialState: ReduxBadgesState = {
-    allCorpBadges: []
+    allCorpBadges: [],
+    allCommBadges: []
 }
 
 export interface ReduxAddBadgePayload {
@@ -20,6 +23,7 @@ export interface ReduxAddBadgeAction extends ReduxAction {
 
 export interface ReduxLoadAllBadgesPayload {
     allCorpBadges: Array<Badge>;
+    allCommBadges: Array<Badge>;
 }
 
 export interface ReduxLoadAllBadgesAction extends ReduxAction {
@@ -29,9 +33,10 @@ export interface ReduxLoadAllBadgesAction extends ReduxAction {
 
 export function loadAllBadges(): ReduxLoadAllBadgesAction {
     const allCorpBadges: Array<Badge> = initialState.allCorpBadges;
+    const allCommBadges: Array<Badge> = initialState.allCommBadges;
     return {
         type: ReduxActionType.LOAD_ALL_BADGES,
-        payload: { allCorpBadges: allCorpBadges }
+        payload: { allCorpBadges: allCorpBadges, allCommBadges: allCommBadges }
     }
 }
 
@@ -52,8 +57,13 @@ export const reducer = (
         case ReduxActionType.LOAD_ALL_BADGES:
             return { ...state, allCorpBadges: action.payload.allCorpBadges };
         case ReduxActionType.ADD_BADGE:
-            state.allCorpBadges.push(action.payload.badge);
-            return { ...state, allCorpBadges: state.allCorpBadges };
+            if(action.payload.badge.type === BadgeType.Corporate) {
+                state.allCorpBadges.push(action.payload.badge);
+            }
+            else if(action.payload.badge.type === BadgeType.Community) {
+                state.allCommBadges.push(action.payload.badge);
+            }
+            return { ...state, allCorpBadges: state.allCorpBadges, allCommBadges: state.allCommBadges };
         default:
             return state;
     }

@@ -13,12 +13,12 @@ import { ReduxState } from '../../store/Store';
 import { BadgeType } from '../../enums/BadgeType';
 
 ActivitySubmit.propTypes = {
-    allCorpBadges: PropTypes.object,
+    badges: PropTypes.object,
     addBadge: PropTypes.func
 }
 
 function ActivitySubmit(props: any): JSX.Element {
-    const {allCorpBadges, addBadge} = props;
+    const {badges, addBadge} = props;
     const stackTokens: IStackTokens = { childrenGap: 20 };
     const stackStyles: Partial<IStackStyles> = {
         root: { width: 500 }
@@ -38,11 +38,12 @@ function ActivitySubmit(props: any): JSX.Element {
     const basePickerStyles: Partial<IBasePickerStyles> = {
         root: { width: 300 }
     };
-    const options: IDropdownOption[] = [
+    const activityOptions: IDropdownOption[] = [
         { key: '1', text: 'Referred Business'},
         { key: '2', text: 'Acted as a mentor'},
         { key: '3', text: 'Acted as a mentee'}
     ];
+
     let date: Date = new Date();
 
     const suggestionProps: IBasePickerSuggestionsProps = {
@@ -104,11 +105,17 @@ function ActivitySubmit(props: any): JSX.Element {
         }
     };
 
+    const [selectedActivity, setSelectedActivity] = React.useState<IDropdownOption>();
+
+    const handleActivityOptionsChanged = (option?: IDropdownOption) => {
+        setSelectedActivity(option);
+    }
+
     const handleSubmit = () => {
-        const newBadgeId = allCorpBadges.allCorpBadges.length + 1;
-        const badge: Badge = { id: newBadgeId, name: "Badge " + newBadgeId, type: BadgeType.Corporate, path: "badgeimage.png" };
+        const newBadgeId: number = badges.allCorpBadges.length + badges.allCommBadges.length + 1;
+        const newBadgeType: BadgeType = Number(selectedActivity?.key) <= 1 ? BadgeType.Corporate : BadgeType.Community;
+        const badge: Badge = { id: newBadgeId, name: "Badge " + newBadgeId, type: newBadgeType, path: "badgeimage.png" };
         addBadge(badge);
-        console.log(allCorpBadges);
     }
       
     initializeIcons();
@@ -119,7 +126,8 @@ function ActivitySubmit(props: any): JSX.Element {
             <Dropdown
                 label="Activity Type"
                 placeholder="Select an option"
-                options={options}
+                options={activityOptions}
+                onChange={(event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => { handleActivityOptionsChanged(option); }}
                 styles={dropDownStyles} />
             <DatePicker 
                 label="Date"
@@ -205,7 +213,7 @@ function onInputChange(input: string): string {
 }
 
 const mapStateToProps = (state: ReduxState) => ({
-    allCorpBadges: state.badges
+    badges: state.badges
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => 

@@ -23,7 +23,7 @@ function CommunityBadges() {
         root: { float: "left", margin: "10px" }
     };
     const allBadges = loadAllBadges();
-    const badgeElements = allBadges.payload.allCorpBadges.map((badge) => 
+    const badgeElements = allBadges.payload.allCommBadges.map((badge) => 
         <Image key={badge.id} src={badge.path} title={badge.name} alt={badge.name} styles={imageStyles} />
     );
     return (
