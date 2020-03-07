@@ -10,6 +10,7 @@ import { people, mru } from '@uifabric/example-data';
 import { addBadge } from '../../store/Badges';
 import Badge from '../../models/Badge';
 import { ReduxState } from '../../store/Store';
+import { BadgeType } from '../../enums/BadgeType';
 
 ActivitySubmit.propTypes = {
     allCorpBadges: PropTypes.object,
@@ -105,7 +106,7 @@ function ActivitySubmit(props: any): JSX.Element {
 
     const handleSubmit = () => {
         const newBadgeId = allCorpBadges.allCorpBadges.length + 1;
-        const badge: Badge = { id: newBadgeId, name: "Badge " + newBadgeId, path: "badgeimage.png" };
+        const badge: Badge = { id: newBadgeId, name: "Badge " + newBadgeId, type: BadgeType.Corporate, path: "badgeimage.png" };
         addBadge(badge);
         console.log(allCorpBadges);
     }
