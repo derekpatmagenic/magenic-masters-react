@@ -11,6 +11,7 @@ import { addBadge } from '../../store/Badges';
 import Badge from '../../models/Badge';
 import { ReduxState } from '../../store/Store';
 import { BadgeType } from '../../enums/BadgeType';
+import useActivityList from '../../hooks/UseActivityList';
 
 ActivitySubmit.propTypes = {
     badges: PropTypes.object,
@@ -38,11 +39,6 @@ function ActivitySubmit(props: any): JSX.Element {
     const basePickerStyles: Partial<IBasePickerStyles> = {
         root: { width: 300 }
     };
-    const activityOptions: IDropdownOption[] = [
-        { key: '1', text: 'Referred Business'},
-        { key: '2', text: 'Acted as a mentor'},
-        { key: '3', text: 'Acted as a mentee'}
-    ];
 
     let date: Date = new Date();
 
@@ -105,6 +101,12 @@ function ActivitySubmit(props: any): JSX.Element {
         }
     };
 
+    const activityList = useActivityList();
+    
+    const activityOptions: IDropdownOption[] = activityList.map((activity) => {
+        return { key: activity.id, text: activity.name, data: activity }
+    });
+
     const [selectedActivity, setSelectedActivity] = React.useState<IDropdownOption>();
 
     const handleActivityOptionsChanged = (option?: IDropdownOption) => {
@@ -112,8 +114,8 @@ function ActivitySubmit(props: any): JSX.Element {
     }
 
     const handleSubmit = () => {
-        const newBadgeId: number = badges.allCorpBadges.length + badges.allCommBadges.length + 1;
-        const newBadgeType: BadgeType = Number(selectedActivity?.key) <= 1 ? BadgeType.Corporate : BadgeType.Community;
+        const newBadgeId: number = badges.earnedCorpBadges.length + badges.earnedCommBadges.length + 1;
+        const newBadgeType: BadgeType = Number(selectedActivity?.key) <= 4 ? BadgeType.Corporate : BadgeType.Community;
         const badge: Badge = { id: newBadgeId, name: "Badge " + newBadgeId, type: newBadgeType, path: "badgeimage.png" };
         addBadge(badge);
     }

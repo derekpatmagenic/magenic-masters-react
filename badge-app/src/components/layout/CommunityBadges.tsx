@@ -5,6 +5,7 @@ import { ReduxState } from '../../store/Store';
 import { Stack, IStackStyles, IStackItemStyles, Image, IImageStyles } from 'office-ui-fabric-react';
 import useBadgeList from '../../hooks/UseBadgeList';
 import { loadAllBadges, addBadge } from '../../store/Badges';
+import Badge from '../../models/Badge';
 
 function CommunityBadges() {
     const stackStyles: Partial<IStackStyles> = {
@@ -22,8 +23,12 @@ function CommunityBadges() {
     const imageStyles: Partial<IImageStyles> = {
         root: { float: "left", margin: "10px" }
     };
-    const allBadges = loadAllBadges();
-    const badgeElements = allBadges.payload.allCommBadges.map((badge) => 
+    const badgeList: Array<Badge> = useBadgeList();
+    const allBadges = loadAllBadges(badgeList);
+    const allCommBadgeElements = allBadges.payload.allCommBadges.map((badge) => 
+        <Image key={badge.id} src={badge.path} title={badge.name} alt={badge.name} styles={imageStyles} />
+    );
+    const earnedCommBadgeElements = allBadges.payload.earnedCommBadges.map((badge) => 
         <Image key={badge.id} src={badge.path} title={badge.name} alt={badge.name} styles={imageStyles} />
     );
     return (
@@ -40,9 +45,14 @@ function CommunityBadges() {
                     </span>
                 </Stack.Item>
             </Stack>
-            <Stack>
+            <Stack hidden={false}>
                 <div>
-                    {badgeElements}
+                    {allCommBadgeElements}
+                </div>
+            </Stack>
+            <Stack hidden={false}>
+                <div>
+                    {earnedCommBadgeElements}
                 </div>
             </Stack>
         </Stack>
@@ -50,7 +60,7 @@ function CommunityBadges() {
 }
 
 const mapStateToProps = (state: ReduxState) => ({
-    allCorpBadges: state.badges
+    badges: state.badges
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => 

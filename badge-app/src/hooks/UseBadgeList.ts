@@ -10,10 +10,10 @@ export default function useBadgeList(): Array<Badge> {
             { id: 2, name: "Badge 2", type: BadgeType.Corporate, path: "badgeimage.png" }, 
             { id: 3, name: "Badge 3", type: BadgeType.Corporate, path: "badgeimage.png" }, 
             { id: 4, name: "Badge 4", type: BadgeType.Corporate, path: "badgeimage.png" }, 
-            { id: 5, name: "Badge 5", type: BadgeType.Corporate, path: "badgeimage.png" }, 
-            { id: 6, name: "Badge 6", type: BadgeType.Corporate, path: "badgeimage.png" }, 
-            { id: 7, name: "Badge 7", type: BadgeType.Corporate, path: "badgeimage.png" }, 
-            { id: 8, name: "Badge 8", type: BadgeType.Corporate, path: "badgeimage.png" } 
+            { id: 5, name: "Badge 5", type: BadgeType.Community, path: "badgeimage.png" }, 
+            { id: 6, name: "Badge 6", type: BadgeType.Community, path: "badgeimage.png" }, 
+            { id: 7, name: "Badge 7", type: BadgeType.Community, path: "badgeimage.png" }, 
+            { id: 8, name: "Badge 8", type: BadgeType.Community, path: "badgeimage.png" } 
         ];
         setBadgeList(badgeList);
     }, []);

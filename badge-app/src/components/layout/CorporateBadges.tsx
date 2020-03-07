@@ -1,12 +1,23 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { ReduxState } from '../../store/Store';
 import { Image, IImageStyles, Stack, IStackStyles, IStackItemStyles } from 'office-ui-fabric-react'
 import useBadgeList from '../../hooks/UseBadgeList';
 import { loadAllBadges, addBadge } from '../../store/Badges';
+import { BadgeType } from '../../enums/BadgeType';
+import Badge from '../../models/Badge';
+
+// CorporateBadges.propTypes = {
+//     showAllTab: PropTypes.bool,
+//     showEarnedTab: PropTypes.bool,
+//     changeTab: PropTypes.func
+// }
 
 function CorporateBadges() {
+    //const { showEarnedTab, changeTab } = props;
+
     const stackStyles: Partial<IStackStyles> = {
         root: { width: 600 }
     };
@@ -22,10 +33,22 @@ function CorporateBadges() {
     const imageStyles: Partial<IImageStyles> = {
         root: { float: "left", margin: "10px" }
     };
-    const allBadges = loadAllBadges();
-    const badgeElements = allBadges.payload.allCorpBadges.map((badge) => 
+
+    const showAll = () => {
+        console.log('showAll');
+    }
+    const showEarned = () => {
+        console.log('showEarned');
+    }
+    const badgeList: Array<Badge> = useBadgeList();
+    const allBadges = loadAllBadges(badgeList);
+    const allCorpBadgeElements = allBadges.payload.allCorpBadges.map((badge) =>
         <Image key={badge.id} src={badge.path} title={badge.name} alt={badge.name} styles={imageStyles} />
     );
+    const earnedCorpBadgeElements = allBadges.payload.earnedCorpBadges.map((badge) => 
+        <Image key={badge.id} src={badge.path} title={badge.name} alt={badge.name} styles={imageStyles} />
+    );
+    
     return (
         <Stack styles={stackStyles}>
             <Stack styles={headerStackStyles}>
@@ -34,15 +57,20 @@ function CorporateBadges() {
                 </Stack.Item>
                 <Stack.Item styles={headerRightStackItemStyles}>
                     <span>
-                        <span>All</span>
+                        <span onClick={showAll}>All</span>
                         <span> | </span>
-                        <span>Earned</span>
+                        <span onClick={showEarned}>Earned</span>
                     </span>
                 </Stack.Item>
             </Stack>
-            <Stack>
+            <Stack hidden={false}>
                 <div>
-                    {badgeElements}
+                    {allCorpBadgeElements}
+                </div>
+            </Stack>
+            <Stack hidden={false}>
+                <div>
+                    {earnedCorpBadgeElements}
                 </div>
             </Stack>
         </Stack>
@@ -50,7 +78,7 @@ function CorporateBadges() {
 }
 
 const mapStateToProps = (state: ReduxState) => ({
-    allCorpBadges: state.badges
+    badges: state.badges
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => 
