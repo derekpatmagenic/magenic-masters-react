@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { ReduxState } from '../../store/Store';
@@ -6,14 +7,28 @@ import { Stack, IStackStyles, IStackItemStyles, Image, IImageStyles } from 'offi
 import useBadgeList from '../../hooks/UseBadgeList';
 import { loadAllBadges, addBadge } from '../../store/Badges';
 import Badge from '../../models/Badge';
+import { TabType } from '../../enums/TabType';
 
-function CommunityBadges() {
+interface Props {
+    tabType: TabType
+}
+
+CommunityBadges.propTypes = {
+    tabType: PropTypes.number.isRequired
+}
+
+function CommunityBadges({ tabType }: Props) {
+    const [selectedTabType, setTabType] = useState(tabType);
+
     const stackStyles: Partial<IStackStyles> = {
         root: { width: 600 }
     };
     const headerStackStyles: Partial<IStackStyles> = {
         root: { display: "block" }
     };
+    const stackHiddenStyles: Partial<IStackStyles> = {
+        root: { display: "none" }
+    }
     const headerLeftStackItemStyles: Partial<IStackItemStyles> = {
         root: { float: "left", height: 60 }
     };
@@ -39,18 +54,18 @@ function CommunityBadges() {
                 </Stack.Item>
                 <Stack.Item styles={headerRightStackItemStyles}>
                     <span>
-                        <span>All</span>
+                        <span onClick={() => setTabType(TabType.All)}>All</span>
                         <span> | </span>
-                        <span>Earned</span>
+                        <span onClick={() => setTabType(TabType.Earned)}>Earned</span>
                     </span>
                 </Stack.Item>
             </Stack>
-            <Stack hidden={false}>
+            <Stack styles={ selectedTabType === TabType.Earned ? stackHiddenStyles : undefined}>
                 <div>
                     {allCommBadgeElements}
                 </div>
             </Stack>
-            <Stack hidden={false}>
+            <Stack styles={ selectedTabType === TabType.All ? stackHiddenStyles : undefined}>
                 <div>
                     {earnedCommBadgeElements}
                 </div>

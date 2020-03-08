@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
@@ -8,15 +8,18 @@ import useBadgeList from '../../hooks/UseBadgeList';
 import { loadAllBadges, addBadge } from '../../store/Badges';
 import { BadgeType } from '../../enums/BadgeType';
 import Badge from '../../models/Badge';
+import { TabType } from '../../enums/TabType';
 
-// CorporateBadges.propTypes = {
-//     showAllTab: PropTypes.bool,
-//     showEarnedTab: PropTypes.bool,
-//     changeTab: PropTypes.func
-// }
+interface Props {
+    tabType: TabType
+}
 
-function CorporateBadges() {
-    //const { showEarnedTab, changeTab } = props;
+CorporateBadges.propTypes = {
+    tabType: PropTypes.number.isRequired
+}
+
+function CorporateBadges({ tabType }: Props) {
+    const [selectedTabType, setTabType] = useState(tabType);
 
     const stackStyles: Partial<IStackStyles> = {
         root: { width: 600 }
@@ -24,6 +27,9 @@ function CorporateBadges() {
     const headerStackStyles: Partial<IStackStyles> = {
         root: { display: "block" }
     };
+    const stackHiddenStyles: Partial<IStackStyles> = {
+        root: { display: "none" }
+    }
     const headerLeftStackItemStyles: Partial<IStackItemStyles> = {
         root: { float: "left", height: 60 }
     };
@@ -33,13 +39,7 @@ function CorporateBadges() {
     const imageStyles: Partial<IImageStyles> = {
         root: { float: "left", margin: "10px" }
     };
-
-    const showAll = () => {
-        console.log('showAll');
-    }
-    const showEarned = () => {
-        console.log('showEarned');
-    }
+    
     const badgeList: Array<Badge> = useBadgeList();
     const allBadges = loadAllBadges(badgeList);
     const allCorpBadgeElements = allBadges.payload.allCorpBadges.map((badge) =>
@@ -57,18 +57,18 @@ function CorporateBadges() {
                 </Stack.Item>
                 <Stack.Item styles={headerRightStackItemStyles}>
                     <span>
-                        <span onClick={showAll}>All</span>
+                        <span onClick={() => setTabType(TabType.All)}>All</span>
                         <span> | </span>
-                        <span onClick={showEarned}>Earned</span>
+                        <span onClick={() => setTabType(TabType.Earned)}>Earned</span>
                     </span>
                 </Stack.Item>
             </Stack>
-            <Stack hidden={false}>
+            <Stack styles={ selectedTabType === TabType.Earned ? stackHiddenStyles : undefined}>
                 <div>
                     {allCorpBadgeElements}
                 </div>
             </Stack>
-            <Stack hidden={false}>
+            <Stack styles={ selectedTabType === TabType.All ? stackHiddenStyles : undefined}>
                 <div>
                     {earnedCorpBadgeElements}
                 </div>
