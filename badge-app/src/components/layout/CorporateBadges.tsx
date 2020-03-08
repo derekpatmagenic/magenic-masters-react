@@ -6,7 +6,6 @@ import { ReduxState } from '../../store/Store';
 import { Image, IImageStyles, Stack, IStackStyles, IStackItemStyles } from 'office-ui-fabric-react'
 import useBadgeList from '../../hooks/UseBadgeList';
 import { loadAllBadges, addBadge } from '../../store/Badges';
-import { BadgeType } from '../../enums/BadgeType';
 import Badge from '../../models/Badge';
 import { TabType } from '../../enums/TabType';
 
@@ -39,7 +38,7 @@ function CorporateBadges({ tabType }: Props) {
     const imageStyles: Partial<IImageStyles> = {
         root: { float: "left", margin: "10px" }
     };
-    
+
     const badgeList: Array<Badge> = useBadgeList();
     const allBadges = loadAllBadges(badgeList);
     const allCorpBadgeElements = allBadges.payload.allCorpBadges.map((badge) =>

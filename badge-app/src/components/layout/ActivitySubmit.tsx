@@ -185,10 +185,6 @@ function listContainsPersona(persona: IPersonaProps, personas?: IPersonaProps[])
     return personas.filter(item => item.text === persona.text).length > 0;
 }
 
-function convertResultsToPromise(results: IPersonaProps[]): Promise<IPersonaProps[]> {
-    return new Promise<IPersonaProps[]>((resolve, reject) => setTimeout(() => resolve(results), 2000));
-}
-
 function getTextFromItem(persona: IPersonaProps): string {
     return persona.text as string;
 }
