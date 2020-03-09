@@ -1,4 +1,5 @@
 export default interface Activity {
     id: number,
-    name: string
+    name: string,
+    badgeId?: number
 }

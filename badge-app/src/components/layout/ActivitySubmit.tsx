@@ -7,11 +7,11 @@ import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
 import { IBasePickerSuggestionsProps, NormalPeoplePicker, ValidationState, IBasePickerStyles } from 'office-ui-fabric-react/lib/Pickers';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 import { people, mru } from '@uifabric/example-data';
-import { addBadge } from '../../store/Badges';
+import { loadAllBadges, addBadge } from '../../store/Badges';
 import Badge from '../../models/Badge';
 import { ReduxState } from '../../store/Store';
-import { BadgeType } from '../../enums/BadgeType';
 import useActivityList from '../../hooks/UseActivityList';
+import useBadgeList from '../../hooks/UseBadgeList';
 
 ActivitySubmit.propTypes = {
     badges: PropTypes.object,
@@ -114,10 +114,21 @@ function ActivitySubmit(props: any): JSX.Element {
     }
 
     const handleSubmit = () => {
-        const newBadgeId: number = badges.earnedCorpBadges.length + badges.earnedCommBadges.length + 1;
-        const newBadgeType: BadgeType = Number(selectedActivity?.key) <= 4 ? BadgeType.Corporate : BadgeType.Community;
-        const badge: Badge = { id: newBadgeId, name: "Badge " + newBadgeId, type: newBadgeType, path: "badgeimage.png" };
-        addBadge(badge);
+        if(selectedActivity?.data !== null) {
+            const badge: Badge | undefined = findBadge(selectedActivity?.data.badgeId);
+            if(badge !== undefined) {
+                const newBadgeId: number = badges.earnedCorpBadges.length + badges.earnedCommBadges.length + 1;
+                badge.id = newBadgeId;
+                addBadge(badge);
+            }
+        }
+    }
+
+    const badgeList: Array<Badge> = useBadgeList();
+
+    const findBadge = (badgeId: number): Badge | undefined => {
+        const badge = badgeList.find(b => b.id === badgeId);
+        return badge;
     }
       
     initializeIcons();
@@ -217,7 +228,7 @@ const mapStateToProps = (state: ReduxState) => ({
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => 
     bindActionCreators(
         {
-            addBadge
+            loadAllBadges, addBadge
         },
         dispatch
     );
