@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { ReduxState } from '../../store/Store';
 import { Image, IImageStyles, Stack, IStackStyles, IStackItemStyles } from 'office-ui-fabric-react'
-import useBadgeList from '../../hooks/UseBadgeList';
+import { useBadgeList } from '../../hooks/UseBadgeList';
 import { loadAllBadges, addBadge } from '../../store/Badges';
 import Badge from '../../models/Badge';
 import { TabType } from '../../enums/TabType';

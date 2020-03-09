@@ -10,8 +10,8 @@ import { people, mru } from '@uifabric/example-data';
 import { loadAllBadges, addBadge } from '../../store/Badges';
 import Badge from '../../models/Badge';
 import { ReduxState } from '../../store/Store';
-import useActivityList from '../../hooks/UseActivityList';
-import useBadgeList from '../../hooks/UseBadgeList';
+import { useActivityList } from '../../hooks/UseActivityList';
+import { useBadgeList } from '../../hooks/UseBadgeList';
 
 ActivitySubmit.propTypes = {
     badges: PropTypes.object,
